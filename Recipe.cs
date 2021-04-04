@@ -14,14 +14,29 @@ namespace Cookbook
         public string Preparation { get; set; }
         public List<Category> Categories;
 
-        public Recipe(string name, List<Ingredient> ingredientsList, string preparation, List<Category> categories, int numberOfServings = 2)
+        public Recipe(string name, string preparation, List<Category> categories, int numberOfServings = 2)
         {
             Name = name;
-            IngredientsList = ingredientsList;
+            IngredientsList = new List<Ingredient>();
             Preparation = preparation;
             Categories = categories;
             NumberOfServings = numberOfServings;
         }
 
+        public void AddIngredient()
+        {
+            string name;
+            double quantity;
+            string unit;
+
+            name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název ingredience: ");
+            quantity = AuxiliaryMethod.LoadNumberFromConsole("Zadejte množství: ");
+            unit = AuxiliaryMethod.LoadStringFromConsole("Zadejte jednotku: ");
+
+            IngredientsList.Add(new Ingredient(name, quantity, unit));
+
+        }
+
+        
     }
 }
