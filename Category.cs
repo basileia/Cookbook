@@ -11,6 +11,6 @@ namespace Cookbook
         Breakfast,
         Snack,
         Lunch,
-        Dinner
+        Dinner       
     }
 }
