@@ -37,6 +37,12 @@ namespace Cookbook
 
         }
 
-        
+        public void RemoveIngredient()
+        {
+            string ingredientToRemove = AuxiliaryMethod.LoadStringFromConsole("Kterou ingredienci chcete odebrat? ");
+            IngredientsList.RemoveAll(x => x.Name == ingredientToRemove);
+            // dodělat - pokud ingredience neexistuje.
+
+        }
     }
 }
