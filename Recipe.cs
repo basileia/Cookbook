@@ -23,7 +23,7 @@ namespace Cookbook
             NumberOfServings = numberOfServings;
         }
 
-        public void AddIngredient()
+       public void AddIngredient()
         {
             string name;
             double quantity;
@@ -40,8 +40,30 @@ namespace Cookbook
         public void RemoveIngredient()
         {
             string ingredientToRemove = AuxiliaryMethod.LoadStringFromConsole("Kterou ingredienci chcete odebrat? ");
-            IngredientsList.RemoveAll(x => x.Name == ingredientToRemove);
-            // dodělat - pokud ingredience neexistuje.
+            if (IngredientsList.Any(i => i.Name == ingredientToRemove))
+            {
+                IngredientsList.RemoveAll(x => x.Name == ingredientToRemove);
+                return;
+            }
+            Console.WriteLine("Tato ingredience v receptu není.");
+            
+        }
+
+        public void ViewRecipe()
+        {
+            Console.WriteLine($"NÁZEV RECEPTU:\n{Name}");
+            Console.WriteLine("SEZNAM INGREDIENCÍ: ");
+            IngredientsList.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
+            Console.WriteLine($"PŘÍPRAVA:\n{Preparation}\nPOČET PORCÍ: {NumberOfServings}");
+            Console.WriteLine("KATEGORIE: " + String.Join(", ", Categories));
+           
+        }
+
+        public void ConvertToTheNumberOfServings(int servings)
+        {
+            List<Ingredient> convertedIngredients = IngredientsList.ConvertAll(x => new Ingredient(x));
+            Console.WriteLine($"Přepočítané ingredience na počet porcí: {servings}");
+            convertedIngredients.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
 
         }
     }

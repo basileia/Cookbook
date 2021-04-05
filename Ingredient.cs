@@ -19,5 +19,13 @@ namespace Cookbook
             Unit = unit;
         }
 
+        public Ingredient(Ingredient clone)
+        {
+            this.Name = clone.Name;
+            this.Quantity = clone.Quantity;
+            this.Unit = clone.Unit;
+
+        }
+
     }
 }

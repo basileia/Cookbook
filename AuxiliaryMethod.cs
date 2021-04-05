@@ -37,7 +37,7 @@ namespace Cookbook
 
                 if (convertResult == false || number <= 0)
                 {
-                    Console.WriteLine("Číslo není větší než 0.");
+                    Console.WriteLine("Toto není číslo větší než nula.");
                 }
             }
 
