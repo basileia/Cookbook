@@ -10,6 +10,18 @@ namespace Cookbook
     {
         static void Main(string[] args)
         {
+
+            Recipe recipe = new Recipe("Jahody", "Zabalit do", new List<Category>() { Category.Breakfast, Category.Snack });
+            recipe.AddIngredient();
+            recipe.AddIngredient();
+
+            recipe.ConvertToTheNumberOfServings(4);
+
+
+            Console.ReadKey();
+
         }
+
+        
     }
 }

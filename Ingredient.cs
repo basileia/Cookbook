@@ -8,15 +8,23 @@ namespace Cookbook
 {
     class Ingredient
     {
-        public string Name { get; private set; }
-        public int Quantity { get; private set; }
-        public string Unit { get; private set; }
+        public string Name { get; set; }
+        public double Quantity { get; set; }
+        public string Unit { get; set; }
 
-        public Ingredient(string name, int quantity, string unit)
+        public Ingredient(string name, double quantity, string unit)
         {
             Name = name;
             Quantity = quantity <= 0 ? 0 : quantity;
             Unit = unit;
+        }
+
+        public Ingredient(Ingredient clone)
+        {
+            this.Name = clone.Name;
+            this.Quantity = clone.Quantity;
+            this.Unit = clone.Unit;
+
         }
 
     }
