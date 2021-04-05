@@ -62,6 +62,7 @@ namespace Cookbook
         public void ConvertToTheNumberOfServings(int servings)
         {
             List<Ingredient> convertedIngredients = IngredientsList.ConvertAll(x => new Ingredient(x));
+            convertedIngredients.ForEach(i => i.Quantity = i.Quantity / NumberOfServings * servings);
             Console.WriteLine($"Přepočítané ingredience na počet porcí: {servings}");
             convertedIngredients.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
 
