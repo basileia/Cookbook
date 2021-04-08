@@ -21,9 +21,9 @@ namespace Cookbook
 
         public Ingredient(Ingredient clone)
         {
-            this.Name = clone.Name;
-            this.Quantity = clone.Quantity;
-            this.Unit = clone.Unit;
+            Name = clone.Name;
+            Quantity = clone.Quantity;
+            Unit = clone.Unit;
 
         }
 

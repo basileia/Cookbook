@@ -12,7 +12,7 @@ namespace Cookbook
         public List<Ingredient> IngredientsList { get; set; }
         public int NumberOfServings { get; set; }
         public string Preparation { get; set; }
-        public List<Category> Categories;
+        public List<Category> Categories { get; set; }
 
         public Recipe(string name, string preparation, List<Category> categories, int numberOfServings = 2)
         {
@@ -63,7 +63,7 @@ namespace Cookbook
         {
             List<Ingredient> convertedIngredients = IngredientsList.ConvertAll(x => new Ingredient(x));
             convertedIngredients.ForEach(i => i.Quantity = i.Quantity / NumberOfServings * servings);
-            Console.WriteLine($"Přepočítané ingredience na počet porcí: {servings}");
+            Console.WriteLine($"Přepočítané ingredience pro recept na počet porcí: {servings}");
             convertedIngredients.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
 
         }
