@@ -14,13 +14,13 @@ namespace Cookbook
         public string Preparation { get; set; }
         public List<Category> Categories { get; set; }
 
-        public Recipe(string name, string preparation, List<Category> categories, int numberOfServings = 2)
+        public Recipe(string name)
         {
             Name = name;
             IngredientsList = new List<Ingredient>();
-            Preparation = preparation;
-            Categories = categories;
-            NumberOfServings = numberOfServings;
+            //Preparation = preparation;
+            //Categories = categories;
+            //NumberOfServings = numberOfServings;
         }
 
        public void AddIngredient()
@@ -55,7 +55,7 @@ namespace Cookbook
             Console.WriteLine("SEZNAM INGREDIENCÍ: ");
             IngredientsList.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
             Console.WriteLine($"PŘÍPRAVA:\n{Preparation}\nPOČET PORCÍ: {NumberOfServings}");
-            Console.WriteLine("KATEGORIE: " + String.Join(", ", Categories));
+            Console.WriteLine("KATEGORIE: " + string.Join(", ", Categories));
            
         }
 

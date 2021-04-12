@@ -8,9 +8,9 @@ namespace Cookbook
 {
     enum Category
     {
-        Breakfast,
-        Snack,
-        Lunch,
-        Dinner       
+        Snídaně = 1,
+        Svačina,
+        Oběd,
+        Večeře       
     }
 }
