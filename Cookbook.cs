@@ -13,28 +13,31 @@ namespace Cookbook
 
         public Cookbook(bool endApp = false)
         {
-            Console.WriteLine("VYBER, NAKUP, UVAŘ");
+            Console.WriteLine("VYBER, NAKUP & BE HAPPY");
             EndApp = endApp;
             Recipes = new List<Recipe>();
         }
 
         public void AddRecipe()
         {
-            string name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název receptu:");
-            Recipe recipe = new Recipe(name);
-
-            string userInput = "";           
-            while(userInput != "ne")
+            string endOfEntry = "";
+            while(endOfEntry != "ne")
             {
-                recipe.AddIngredient();
-                userInput = AuxiliaryMethod.LoadStringFromConsole("Chcete přidat další ingredienci? ano/ne").ToLower();
-            }
+                string name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název receptu:");
+                Recipe recipe = new Recipe(name);
 
-            recipe.NumberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
-            recipe.Preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy:");
-            recipe.Categories = SelectCategories();
-            Recipes.Add(recipe);
-                  
+                string userInput = "";
+                while (userInput != "ne")
+                {
+                    recipe.AddIngredient();
+                    userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další ingredienci? ano/ne");
+                }
+                recipe.NumberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
+                recipe.Preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy:");
+                recipe.Categories = SelectCategories();
+                Recipes.Add(recipe);
+                endOfEntry = AuxiliaryMethod.EnterYesOrNo("Chcete zadat další recept? ano/ne");
+            }
         }
 
         public void ViewRecipes()
@@ -54,13 +57,30 @@ namespace Cookbook
                     count++;
                     Console.WriteLine("Kategorie {0, 8}: {1, 10}", c, count);
                 }
-                Category category = (Category)(int)AuxiliaryMethod.LoadNumberFromConsole("Do které kategorie chcete recept zařadit? Napište číslo:");
-                categories.Add(category);
-                userInput = AuxiliaryMethod.LoadStringFromConsole("Chcete přidat další kategorii? ano/ne").ToLower();
+                int categoryNumber = (int)AuxiliaryMethod.LoadNumberFromConsole("Do které kategorie chcete recept zařadit? Napište číslo:");
+                Category category = (Category)(int)categoryNumber;
+                if (!IsInCategoryList(categories, category) && categoryNumber <= count)
+                {
+                    
+                    categories.Add(category);
+                }
+                else if(categoryNumber > count)
+                {
+                    Console.WriteLine("Tato kategorie neexistuje.");
+                }
+                else
+                {
+                    Console.WriteLine("Tato kategorie již byla přidána.");
+                }
+                userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další kategorii? ano/ne");
+                                    
             }
             return categories;
-            
+        }
 
+        private bool IsInCategoryList(List<Category> categories, Category category)
+        {
+            return categories.Contains(category);
         }
 
 

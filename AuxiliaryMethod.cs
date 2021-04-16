@@ -42,8 +42,18 @@ namespace Cookbook
             }
 
             return number;
-
-
         }
+
+        public static string EnterYesOrNo(string question)
+        {
+            string userInput = "";
+            while (userInput != "ne" && userInput != "ano")
+            {
+                userInput = LoadStringFromConsole(question).ToLower();
+            }
+            return userInput;
+        }
+
+        
     }
 }
