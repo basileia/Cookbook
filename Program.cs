@@ -14,7 +14,8 @@ namespace Cookbook
             Cookbook cookbook = new Cookbook();
 
             cookbook.AddRecipe();
-            cookbook.ViewRecipes();
+            cookbook.ViewRecipes((Category)1);
+
 
             Console.ReadKey();
 

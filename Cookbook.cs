@@ -40,9 +40,17 @@ namespace Cookbook
             }
         }
 
-        public void ViewRecipes()
+        public void ViewRecipes(Category category = 0)
         {
-            Recipes.ForEach(x => x.ViewRecipe());
+            if (category != 0)
+            {
+                FindRecipesByCategory(category).ForEach(x => x.ViewRecipe());
+            }
+            else
+            {
+                Recipes.ForEach(x => x.ViewRecipe());
+            }
+            
         }
 
         public List<Category> SelectCategories()
@@ -54,8 +62,11 @@ namespace Cookbook
                 int count = 0;
                 foreach (Category c in Enum.GetValues(typeof(Category)))
                 {
-                    count++;
-                    Console.WriteLine("Kategorie {0, 8}: {1, 10}", c, count);
+                    if (c != 0)
+                    {
+                        count++;
+                        Console.WriteLine("Kategorie {0, 8}: {1, 10}", c, count);
+                    }
                 }
                 int categoryNumber = (int)AuxiliaryMethod.LoadNumberFromConsole("Do které kategorie chcete recept zařadit? Napište číslo:");
                 Category category = (Category)(int)categoryNumber;
@@ -83,7 +94,10 @@ namespace Cookbook
             return categories.Contains(category);
         }
 
-
+        private List<Recipe> FindRecipesByCategory(Category category)
+        {
+              return Recipes.FindAll(x => x.Categories.Contains(category));
+        }
 
 
     }
