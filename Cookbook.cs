@@ -23,7 +23,7 @@ namespace Cookbook
             string endOfEntry = "";
             while(endOfEntry != "ne")
             {
-                string name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název receptu:");
+                string name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:");
                 Recipe recipe = new Recipe(name);
 
                 string userInput = "";
@@ -33,28 +33,19 @@ namespace Cookbook
                     userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další ingredienci? ano/ne");
                 }
                 recipe.NumberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
-                recipe.Preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy:");
+                string preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy. Jednotlivé řádky můžete oddělit dvěma mezerami.");
+                recipe.Preparation = preparation.Replace("  ", "\n");
                 recipe.Categories = SelectCategories();
                 Recipes.Add(recipe);
                 endOfEntry = AuxiliaryMethod.EnterYesOrNo("Chcete zadat další recept? ano/ne");
             }
         }
 
-        public void ViewRecipes(Category category = 0, Ingredient ingredient = null)
+        public void ViewRecipes()
         {
-            if (category != 0)
-            {
-                FindRecipesByCategory(category).ForEach(x => x.ViewRecipe());
-            }
-            else if (ingredient != null)
-            {
-                FindRecipesByIngredient(ingredient).ForEach(x => x.ViewRecipe());
-            }
-            else
-            {
+             {
                 Recipes.ForEach(x => x.ViewRecipe());
-            }
-            
+             }
         }
 
         public List<Category> SelectCategories()
@@ -63,25 +54,13 @@ namespace Cookbook
             string userInput = "";
             while (userInput != "ne")
             {
-                int count = 0;
-                foreach (Category c in Enum.GetValues(typeof(Category)))
-                {
-                    if (c != 0)
-                    {
-                        count++;
-                        Console.WriteLine("Kategorie {0, 8}: {1, 10}", c, count);
-                    }
-                }
-                int categoryNumber = (int)AuxiliaryMethod.LoadNumberFromConsole("Do které kategorie chcete recept zařadit? Napište číslo:");
+                Menu.ShowCategories();
+                int count = (int)Enum.GetValues(typeof(Category)).Cast<Category>().Max();
+                int categoryNumber = (int)AuxiliaryMethod.LoadNumberInRange("Do které kategorie chcete recept zařadit?\nNapište číslo:", count);
                 Category category = (Category)(int)categoryNumber;
-                if (!IsInCategoryList(categories, category) && categoryNumber <= count)
+                if (!IsInCategoryList(categories, category))
                 {
-                    
                     categories.Add(category);
-                }
-                else if(categoryNumber > count)
-                {
-                    Console.WriteLine("Tato kategorie neexistuje.");
                 }
                 else
                 {
@@ -98,10 +77,10 @@ namespace Cookbook
             return categories.Contains(category);
         }
 
-        private List<Recipe> FindRecipesByCategory(Category category)
+        public List<Recipe> FindRecipesByCategory(Category category)
         {
             List<Recipe> recipes = Recipes.FindAll(x => x.Categories.Contains(category));
-            if (!recipes.Any())
+            if (recipes.Any())
             {
                 return recipes;
             }
@@ -109,15 +88,37 @@ namespace Cookbook
             return recipes;
         }
 
-        private List<Recipe> FindRecipesByIngredient(Ingredient ingredient)
+        public List<Recipe> FindRecipesByIngredient(string ingredientName)
         {
-            List<Recipe> recipes = Recipes.FindAll(x => x.IngredientsList.Contains(ingredient));
-            if (!recipes.Any())
+            List<Recipe> recipes = new List<Recipe>();
+            foreach (Recipe recipe in Recipes)
+            {
+               foreach (Ingredient ingredient in recipe.IngredientsList)
+                {
+                    if (ingredient.Name == ingredientName)
+                    {
+                        recipes.Add(recipe);
+                    }
+                }
+            }
+
+            if (recipes.Any())
             {
                 return recipes;
             }
             Console.WriteLine("Recept s touto ingrediencí v kuchařce není.");
             return recipes;
+        }
+
+        public Recipe FindRecipeByName(string recipeName)
+        {
+            Recipe recipe = Recipes.Find(x => x.Name.ToLower() == recipeName);
+            if (recipe != null)
+            {
+                return recipe;
+            }
+            Console.WriteLine("Recept s tímto názvem v kuchařce není.");
+            return recipe;
         }
 
 

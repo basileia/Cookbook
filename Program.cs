@@ -17,11 +17,8 @@ namespace Cookbook
             {
                 cookbook.ShowMenu = Menu.MainMenu(cookbook);
             }
-
-            //Console.ReadKey();
-
+ 
         }
 
-        
     }
 }

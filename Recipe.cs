@@ -29,7 +29,7 @@ namespace Cookbook
             double quantity;
             string unit;
 
-            name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název ingredience: ");
+            name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název ingredience: ").ToLower();
             quantity = AuxiliaryMethod.LoadNumberFromConsole("Zadejte množství: ");
             unit = AuxiliaryMethod.LoadStringFromConsole("Zadejte jednotku: ");
 
@@ -39,7 +39,7 @@ namespace Cookbook
 
         public void RemoveIngredient()
         {
-            string ingredientToRemove = AuxiliaryMethod.LoadStringFromConsole("Kterou ingredienci chcete odebrat? ");
+            string ingredientToRemove = AuxiliaryMethod.LoadStringFromConsole("Kterou ingredienci chcete odebrat? ").ToLower();
             if (IngredientsList.Any(i => i.Name == ingredientToRemove))
             {
                 IngredientsList.RemoveAll(x => x.Name == ingredientToRemove);
@@ -56,6 +56,11 @@ namespace Cookbook
             IngredientsList.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
             Console.WriteLine($"PŘÍPRAVA:\n{Preparation}\nPOČET PORCÍ: {NumberOfServings}");
             Console.WriteLine("KATEGORIE: " + string.Join(", ", Categories) + "\n");
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}\n";
         }
 
         public void ConvertToTheNumberOfServings(int servings)

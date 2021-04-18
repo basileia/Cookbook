@@ -13,7 +13,7 @@ namespace Cookbook
             Console.WriteLine(question);
             string userInput = Console.ReadLine();
 
-            while (String.IsNullOrEmpty(userInput))
+            while (string.IsNullOrEmpty(userInput))
             {
                 Console.WriteLine("Hodnota nemůže zůstat prázdná.");
                 Console.WriteLine(question);
@@ -21,7 +21,7 @@ namespace Cookbook
 
             }
             
-            return userInput;
+            return userInput.Trim();
         }
 
         public static double LoadNumberFromConsole(string question)
@@ -42,6 +42,17 @@ namespace Cookbook
             }
 
             return number;
+        }
+
+        public static int LoadNumberInRange(string question, int max, int min = 1)
+        {
+            int userInput = (int)LoadNumberFromConsole(question);
+            while (userInput < min || userInput > max)
+            {
+                Console.WriteLine($"Číslo není v rozmezí {min} až {max}");
+                userInput = (int)LoadNumberFromConsole(question);
+            }
+            return userInput;           
         }
 
         public static string EnterYesOrNo(string question)
