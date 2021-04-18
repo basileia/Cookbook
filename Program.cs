@@ -13,11 +13,12 @@ namespace Cookbook
 
             Cookbook cookbook = new Cookbook();
 
-            cookbook.AddRecipe();
-            cookbook.ViewRecipes((Category)1);
+            while (cookbook.ShowMenu)
+            {
+                cookbook.ShowMenu = Menu.MainMenu(cookbook);
+            }
 
-
-            Console.ReadKey();
+            //Console.ReadKey();
 
         }
 

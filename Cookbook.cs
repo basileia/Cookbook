@@ -8,13 +8,13 @@ namespace Cookbook
 {
     class Cookbook
     {
-        public bool EndApp { get; set; }
+        public bool ShowMenu { get; set; }
         public List<Recipe> Recipes { get; set; }
 
-        public Cookbook(bool endApp = false)
+        public Cookbook(bool showMenu = true)
         {
             Console.WriteLine("VYBER, NAKUP & BE HAPPY");
-            EndApp = endApp;
+            ShowMenu = showMenu;
             Recipes = new List<Recipe>();
         }
 
@@ -40,11 +40,15 @@ namespace Cookbook
             }
         }
 
-        public void ViewRecipes(Category category = 0)
+        public void ViewRecipes(Category category = 0, Ingredient ingredient = null)
         {
             if (category != 0)
             {
                 FindRecipesByCategory(category).ForEach(x => x.ViewRecipe());
+            }
+            else if (ingredient != null)
+            {
+                FindRecipesByIngredient(ingredient).ForEach(x => x.ViewRecipe());
             }
             else
             {
@@ -96,7 +100,24 @@ namespace Cookbook
 
         private List<Recipe> FindRecipesByCategory(Category category)
         {
-              return Recipes.FindAll(x => x.Categories.Contains(category));
+            List<Recipe> recipes = Recipes.FindAll(x => x.Categories.Contains(category));
+            if (!recipes.Any())
+            {
+                return recipes;
+            }
+            Console.WriteLine("Recept s touto kategorií v kuchařce není.");
+            return recipes;
+        }
+
+        private List<Recipe> FindRecipesByIngredient(Ingredient ingredient)
+        {
+            List<Recipe> recipes = Recipes.FindAll(x => x.IngredientsList.Contains(ingredient));
+            if (!recipes.Any())
+            {
+                return recipes;
+            }
+            Console.WriteLine("Recept s touto ingrediencí v kuchařce není.");
+            return recipes;
         }
 
 
