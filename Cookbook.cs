@@ -21,23 +21,23 @@ namespace Cookbook
         public void AddRecipe()
         {
             string endOfEntry = "";
-            while(endOfEntry != "ne")
+            while(endOfEntry != "n")
             {
                 string name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:");
                 Recipe recipe = new Recipe(name);
 
                 string userInput = "";
-                while (userInput != "ne")
+                while (userInput != "n")
                 {
                     recipe.AddIngredient();
-                    userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další ingredienci? ano/ne");
+                    userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další ingredienci? a/n");
                 }
                 recipe.NumberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
                 string preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy. Jednotlivé řádky můžete oddělit dvěma mezerami.");
                 recipe.Preparation = preparation.Replace("  ", "\n");
                 recipe.Categories = SelectCategories();
                 Recipes.Add(recipe);
-                endOfEntry = AuxiliaryMethod.EnterYesOrNo("Chcete zadat další recept? ano/ne");
+                endOfEntry = AuxiliaryMethod.EnterYesOrNo("Chcete zadat další recept? a/n");
             }
         }
 
@@ -52,7 +52,7 @@ namespace Cookbook
         {
             List<Category> categories = new List<Category>();
             string userInput = "";
-            while (userInput != "ne")
+            while (userInput != "n")
             {
                 Menu.ShowCategories();
                 int count = (int)Enum.GetValues(typeof(Category)).Cast<Category>().Max();
@@ -66,7 +66,7 @@ namespace Cookbook
                 {
                     Console.WriteLine("Tato kategorie již byla přidána.");
                 }
-                userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další kategorii? ano/ne");
+                userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další kategorii? a/n");
                                     
             }
             return categories;

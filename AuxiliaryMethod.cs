@@ -58,7 +58,7 @@ namespace Cookbook
         public static string EnterYesOrNo(string question)
         {
             string userInput = "";
-            while (userInput != "ne" && userInput != "ano")
+            while (userInput != "n" && userInput != "a")
             {
                 userInput = LoadStringFromConsole(question).ToLower();
             }
