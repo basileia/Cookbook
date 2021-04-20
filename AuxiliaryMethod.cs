@@ -69,8 +69,13 @@ namespace Cookbook
        public static string GetProjectDirectory()
         {
             var CurrentProjectDirectory = Directory.GetCurrentDirectory();
-            int index = CurrentProjectDirectory.IndexOf("\\bin");
-            return CurrentProjectDirectory.Substring(0, index);
+            if (CurrentProjectDirectory.Contains("\\bin"))
+            {
+                int index = CurrentProjectDirectory.IndexOf("\\bin");   
+                return CurrentProjectDirectory.Substring(0, index);
+            }
+            return CurrentProjectDirectory;
+            
         }
 
     }
