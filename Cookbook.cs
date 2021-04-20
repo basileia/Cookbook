@@ -136,12 +136,13 @@ namespace Cookbook
             using (StreamWriter file = File.CreateText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, Recipes);
+                foreach (Recipe recipe in Recipes)
+                {
+                    serializer.Serialize(file, recipe);  //to more human readable
+                }
+                
             }
         }
-
-
-
 
     }
 }

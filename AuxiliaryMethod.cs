@@ -12,13 +12,13 @@ namespace Cookbook
         public static string LoadStringFromConsole(string question)
         {
             Console.WriteLine(question);
-            string userInput = Console.ReadLine();
+            string userInput = Console.ReadLine().Trim();
 
             while (string.IsNullOrEmpty(userInput))
             {
                 Console.WriteLine("Hodnota nemůže zůstat prázdná.");
                 Console.WriteLine(question);
-                userInput = Console.ReadLine();
+                userInput = Console.ReadLine().Trim();
 
             }
             
