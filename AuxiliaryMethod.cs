@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,12 @@ namespace Cookbook
             return userInput;
         }
 
-        
+       public static string GetProjectDirectory()
+        {
+            var CurrentProjectDirectory = Directory.GetCurrentDirectory();
+            int index = CurrentProjectDirectory.IndexOf("\\bin");
+            return CurrentProjectDirectory.Substring(0, index);
+        }
+
     }
 }

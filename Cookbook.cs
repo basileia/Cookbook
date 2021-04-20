@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace Cookbook
 {
@@ -13,7 +14,6 @@ namespace Cookbook
 
         public Cookbook(bool showMenu = true)
         {
-            Console.WriteLine("VYBER, NAKUP & BE HAPPY");
             ShowMenu = showMenu;
             Recipes = new List<Recipe>();
         }
@@ -120,6 +120,27 @@ namespace Cookbook
             Console.WriteLine("Recept s tímto názvem v kuchařce není.");
             return recipe;
         }
+
+        public void DeleteRecipe()
+        {
+            int recipeNumber = AuxiliaryMethod.LoadNumberInRange("Který recept chcete smazat?", Recipes.Count);
+            Recipe recipe = FindRecipeByName(Recipes[recipeNumber - 1].Name);
+            if (recipe != null)
+            {
+                Recipes.Remove(recipe);
+            }
+        }
+
+        public void PutRecipesToJson()
+        {
+            using (StreamWriter file = File.CreateText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, Recipes);
+            }
+        }
+
+
 
 
     }

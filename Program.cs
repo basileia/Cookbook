@@ -17,7 +17,9 @@ namespace Cookbook
             {
                 cookbook.ShowMenu = Menu.MainMenu(cookbook);
             }
- 
+            
+            cookbook.PutRecipesToJson();
+             
         }
 
     }

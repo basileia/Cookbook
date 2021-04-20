@@ -11,10 +11,12 @@ namespace Cookbook
         public static bool MainMenu(Cookbook cookbook)
         {
             Console.Clear();
+            Console.WriteLine("VYBER, UVAŘ & BE HAPPY\n\n");
             Console.WriteLine("HLAVNÍ MENU:\n");
-            Console.WriteLine("1) Zobrazit názvy receptů");
+            Console.WriteLine("1) Zobrazit recepty");
             Console.WriteLine("2) Přidat recept");
-            Console.WriteLine("3) Konec");
+            Console.WriteLine("3) Smazat recept");
+            Console.WriteLine("4) Konec");
             Console.Write("\nCo chcete udělat? ");
 
             switch (Console.ReadLine())
@@ -28,6 +30,10 @@ namespace Cookbook
                     cookbook.AddRecipe();
                     return true;
                 case "3":
+                    ShowCertainRecipeFromList(cookbook, cookbook.Recipes);
+                    cookbook.DeleteRecipe();
+                    return true;
+                case "4":
                     return false;
                 default:
                     return true;
