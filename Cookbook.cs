@@ -137,7 +137,8 @@ namespace Cookbook
                 JsonSerializer serializer = new JsonSerializer();
                 foreach (Recipe recipe in Recipes)
                 {
-                    serializer.Serialize(file, recipe);  //to more human readable
+                    serializer.Formatting = Formatting.Indented;
+                    serializer.Serialize(file, recipe);  
                 }
                 
             }
