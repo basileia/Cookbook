@@ -85,7 +85,7 @@ namespace Cookbook
             {
                 return recipes;
             }
-            Console.WriteLine("Recept s touto kategorií v kuchařce není.");
+            Console.WriteLine($"{category}: Recept s touto kategorií v kuchařce není.");
             return recipes;
         }
 
@@ -202,6 +202,8 @@ namespace Cookbook
                 string userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat ingredience do nákupního seznamu? a/n");
                 if (userInput == "a")
                 {
+                    int numberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("\nPro kolik lidí budete vařit?");
+                    randomMenu.ForEach(x => x.IngredientsList = x.ConvertToTheNumberOfServings(numberOfServings));
                     randomMenu.ForEach(x => ShoppingList.AddIngredientsToShoppingList(x));
                 }
             }

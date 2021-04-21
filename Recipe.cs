@@ -61,12 +61,11 @@ namespace Cookbook
             return $"{Name}";
         }
 
-        public void ConvertToTheNumberOfServings(int servings)
+        public List<Ingredient> ConvertToTheNumberOfServings(int servings)
         {
             List<Ingredient> convertedIngredients = IngredientsList.ConvertAll(x => new Ingredient(x));
-            convertedIngredients.ForEach(i => i.Quantity = i.Quantity / NumberOfServings * servings);
-            Console.WriteLine($"Přepočítané ingredience pro recept na počet porcí: {servings}");
-            convertedIngredients.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
+            convertedIngredients.ForEach(i => i.Quantity = Math.Round(i.Quantity / NumberOfServings * servings, 2));
+            return convertedIngredients;
 
         }
     }
