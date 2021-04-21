@@ -13,6 +13,8 @@ namespace Cookbook
 
             Cookbook cookbook = new Cookbook();
 
+            cookbook.LoadRecipesFromJson();
+
             while (cookbook.ShowMenu)
             {
                 cookbook.ShowMenu = Menu.MainMenu(cookbook);

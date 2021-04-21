@@ -51,7 +51,7 @@ namespace Cookbook
 
         public void ViewRecipe()
         {
-            Console.WriteLine($"NÁZEV RECEPTU:\n{Name}");
+            Console.WriteLine($"\nNÁZEV RECEPTU:\n{Name}");
             Console.WriteLine("SEZNAM INGREDIENCÍ: ");
             IngredientsList.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
             Console.WriteLine($"PŘÍPRAVA:\n{Preparation}\nPOČET PORCÍ: {NumberOfServings}");

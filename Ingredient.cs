@@ -19,6 +19,11 @@ namespace Cookbook
             Unit = unit;
         }
 
+       public Ingredient()
+        {
+            
+        }
+
         public Ingredient(Ingredient clone)
         {
             Name = clone.Name;

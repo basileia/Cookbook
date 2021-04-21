@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -111,7 +112,7 @@ namespace Cookbook
 
         public Recipe FindRecipeByName(string recipeName)
         {
-            Recipe recipe = Recipes.Find(x => x.Name.ToLower() == recipeName);
+            Recipe recipe = Recipes.Find(x => x.Name.ToLower() == recipeName.ToLower());
             if (recipe != null)
             {
                 return recipe;
@@ -134,14 +135,20 @@ namespace Cookbook
         {
             using (StreamWriter file = File.CreateText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json"))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                foreach (Recipe recipe in Recipes)
+                JsonSerializer serializer = new JsonSerializer
                 {
-                    serializer.Formatting = Formatting.Indented;
-                    serializer.Serialize(file, recipe);  
-                }
+                    Formatting = Formatting.Indented
+                };
+                serializer.Serialize(file, Recipes);  
+                
                 
             }
+        }
+
+        public void LoadRecipesFromJson()
+        {
+            var fileContent = File.ReadAllText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json");
+            Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
         }
 
     }
