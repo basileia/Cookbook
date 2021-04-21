@@ -203,8 +203,9 @@ namespace Cookbook
                 if (userInput == "a")
                 {
                     int numberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("\nPro kolik lidí budete vařit?");
-                    randomMenu.ForEach(x => x.IngredientsList = x.ConvertToTheNumberOfServings(numberOfServings));
+                    randomMenu.ForEach(x => x.ConvertedIngredients = x.ConvertToTheNumberOfServings(numberOfServings));
                     randomMenu.ForEach(x => ShoppingList.AddIngredientsToShoppingList(x));
+                    randomMenu.ForEach(x => x.ConvertedIngredients.Clear());
                 }
             }
         }

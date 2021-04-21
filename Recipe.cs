@@ -8,6 +8,7 @@ namespace Cookbook
     {
         public string Name { get; set; }
         public List<Ingredient> IngredientsList { get; set; }
+        public List<Ingredient> ConvertedIngredients { get; set; }
         public int NumberOfServings { get; set; }
         public string Preparation { get; set; }
         public List<Category> Categories { get; set; }
@@ -16,9 +17,6 @@ namespace Cookbook
         {
             Name = name;
             IngredientsList = new List<Ingredient>();
-            //Preparation = preparation;
-            //Categories = categories;
-            //NumberOfServings = numberOfServings;
         }
 
        public void AddIngredient()

@@ -15,7 +15,7 @@ namespace Cookbook
 
         public void AddIngredientsToShoppingList(Recipe recipe)
         {
-            IngredientsList.AddRange(recipe.IngredientsList);
+            IngredientsList.AddRange(recipe.ConvertedIngredients);
         }
 
         public void ViewShoppingList()
