@@ -60,7 +60,7 @@ namespace Cookbook
 
         public override string ToString()
         {
-            return $"{Name}\n";
+            return $"{Name}";
         }
 
         public void ConvertToTheNumberOfServings(int servings)

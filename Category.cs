@@ -8,8 +8,7 @@ namespace Cookbook
 {
     enum Category
     {
-        None = 0,
-        Snídaně,
+        Snídaně = 1,
         Svačina,
         Oběd,
         Večeře       

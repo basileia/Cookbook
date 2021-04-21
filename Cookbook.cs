@@ -11,7 +11,7 @@ namespace Cookbook
     {
         public bool ShowMenu { get; set; }
         public List<Recipe> Recipes { get; set; }
-
+        
         public Cookbook(bool showMenu = true)
         {
             ShowMenu = showMenu;
@@ -128,6 +128,7 @@ namespace Cookbook
             if (recipe != null)
             {
                 Recipes.Remove(recipe);
+                Console.WriteLine("Recept byl odebrán.");
             }
         }
 
@@ -149,6 +150,38 @@ namespace Cookbook
         {
             var fileContent = File.ReadAllText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json");
             Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
+        }
+
+        public List<Recipe> GenerateRandomMenu()
+        {
+            Random rnd = new Random();
+            List<Recipe> randomMenu = new List<Recipe>();
+            foreach (Category category in Enum.GetValues(typeof(Category)))
+            {
+                List<Recipe> recipesByCategory = FindRecipesByCategory(category);
+                if (recipesByCategory.Any())
+                {
+                    int randomIndex = rnd.Next(recipesByCategory.Count);
+                    randomMenu.Add(recipesByCategory[randomIndex]);
+                }
+ 
+            }
+            return randomMenu;                
+        }
+
+        public void ShowRandomMenu()
+        {
+            List<Recipe> randomMenu = GenerateRandomMenu();
+
+            foreach (int i in Enum.GetValues(typeof(Category)))
+            {
+                Console.WriteLine($"{ (Category)i }:");
+                if (i <= randomMenu.Count)
+                {
+                    randomMenu[i - 1].ViewRecipe();
+                }
+                
+            }
         }
 
     }

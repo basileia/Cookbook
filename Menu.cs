@@ -16,7 +16,8 @@ namespace Cookbook
             Console.WriteLine("1) Zobrazit recepty");
             Console.WriteLine("2) Přidat recept");
             Console.WriteLine("3) Smazat recept");
-            Console.WriteLine("4) Konec");
+            Console.WriteLine("4) Vygenerovat náhodný jídelníček");
+            Console.WriteLine("5) Konec");
             Console.Write("\nCo chcete udělat? ");
 
             switch (Console.ReadLine())
@@ -30,10 +31,17 @@ namespace Cookbook
                     cookbook.AddRecipe();
                     return true;
                 case "3":
-                    ShowCertainRecipeFromList(cookbook, cookbook.Recipes);
+                    ShowRecipeNames(cookbook.Recipes);
                     cookbook.DeleteRecipe();
+                    Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
+                    Console.ReadKey();
                     return true;
                 case "4":
+                    cookbook.ShowRandomMenu();
+                    Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
+                    Console.ReadKey();
+                    return true;
+                case "5":
                     return false;
                 default:
                     return true;
