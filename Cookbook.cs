@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -134,22 +133,27 @@ namespace Cookbook
 
         public void PutRecipesToJson()
         {
-            using (StreamWriter file = File.CreateText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json"))
+            if (Recipes.Any())
             {
-                JsonSerializer serializer = new JsonSerializer
+                using (StreamWriter file = File.CreateText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json"))
                 {
-                    Formatting = Formatting.Indented
-                };
-                serializer.Serialize(file, Recipes);  
-                
-                
+                    JsonSerializer serializer = new JsonSerializer
+                    {
+                        Formatting = Formatting.Indented
+                    };
+                    serializer.Serialize(file, Recipes);
+                }
             }
         }
 
         public void LoadRecipesFromJson()
         {
-            var fileContent = File.ReadAllText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json");
-            Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
+            string file = AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json";
+            if (File.Exists(file))
+            {
+                var fileContent = File.ReadAllText(file);
+                Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
+            }
         }
 
         public List<Recipe> GenerateRandomMenu()
@@ -180,7 +184,6 @@ namespace Cookbook
                 {
                     randomMenu[i - 1].ViewRecipe();
                 }
-                
             }
         }
 

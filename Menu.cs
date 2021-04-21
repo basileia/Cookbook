@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cookbook
 {
@@ -102,6 +99,10 @@ namespace Cookbook
                 {
                     recipe.ViewRecipe();
                 }
+            }
+            else
+            {
+                Console.WriteLine("Nejsou žádné recepty k zobrazení.");
             }
         }
 
