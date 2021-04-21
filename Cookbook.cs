@@ -10,11 +10,13 @@ namespace Cookbook
     {
         public bool ShowMenu { get; set; }
         public List<Recipe> Recipes { get; set; }
-        
+        public ShoppingList ShoppingList { get; set; }
+
         public Cookbook(bool showMenu = true)
         {
             ShowMenu = showMenu;
             Recipes = new List<Recipe>();
+            ShoppingList = new ShoppingList();
         }
 
         public void AddRecipe()
@@ -83,7 +85,7 @@ namespace Cookbook
             {
                 return recipes;
             }
-            Console.WriteLine("Recept s touto kategorií v kuchařce není.");
+            Console.WriteLine($"{category}: Recept s touto kategorií v kuchařce není.");
             return recipes;
         }
 
@@ -122,20 +124,29 @@ namespace Cookbook
 
         public void DeleteRecipe()
         {
-            int recipeNumber = AuxiliaryMethod.LoadNumberInRange("Který recept chcete smazat?", Recipes.Count);
-            Recipe recipe = FindRecipeByName(Recipes[recipeNumber - 1].Name);
-            if (recipe != null)
+            if (Recipes.Any())
             {
-                Recipes.Remove(recipe);
-                Console.WriteLine("Recept byl odebrán.");
+                int recipeNumber = AuxiliaryMethod.LoadNumberInRange("\nKterý recept chcete smazat?", Recipes.Count);
+                Recipe recipe = FindRecipeByName(Recipes[recipeNumber - 1].Name);
+                if (recipe != null)
+                {
+                    Recipes.Remove(recipe);
+                    Console.WriteLine("Recept byl odebrán.");
+                }
             }
+            else
+            {
+                Console.WriteLine("Nejsou žádné recepty, které by mohly být smazány.");
+            }
+            
         }
 
         public void PutRecipesToJson()
         {
-            if (Recipes.Any())
+            string curFile = AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json";
+            if (Recipes.Any() || File.Exists(curFile))
             {
-                using (StreamWriter file = File.CreateText(AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json"))
+                using (StreamWriter file = File.CreateText(curFile))
                 {
                     JsonSerializer serializer = new JsonSerializer
                     {
@@ -183,6 +194,17 @@ namespace Cookbook
                 if (i <= randomMenu.Count)
                 {
                     randomMenu[i - 1].ViewRecipe();
+                }
+            }
+            
+            if (randomMenu.Any())
+            {
+                string userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat ingredience do nákupního seznamu? a/n");
+                if (userInput == "a")
+                {
+                    int numberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("\nPro kolik lidí budete vařit?");
+                    randomMenu.ForEach(x => x.IngredientsList = x.ConvertToTheNumberOfServings(numberOfServings));
+                    randomMenu.ForEach(x => ShoppingList.AddIngredientsToShoppingList(x));
                 }
             }
         }
