@@ -14,31 +14,36 @@ namespace Cookbook
             Console.WriteLine("2) Přidat recept");
             Console.WriteLine("3) Smazat recept");
             Console.WriteLine("4) Vygenerovat náhodný jídelníček");
-            Console.WriteLine("5) Konec");
-            Console.Write("\nCo chcete udělat? ");
+            Console.WriteLine("5) Ukázat nákupní seznam");
+            Console.WriteLine("6) Konec");
 
-            switch (Console.ReadLine())
+            switch (AuxiliaryMethod.LoadNumberInRange("\nCo chcete udělat? ", 6))
             {
-                case "1":
+                case 1:
                     MenuRecipesToView(cookbook);
                     Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
                     Console.ReadKey();
                     return true;
-                case "2":
+                case 2:
                     cookbook.AddRecipe();
                     return true;
-                case "3":
+                case 3:
                     ShowRecipeNames(cookbook.Recipes);
                     cookbook.DeleteRecipe();
                     Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
                     Console.ReadKey();
                     return true;
-                case "4":
+                case 4:
                     cookbook.ShowRandomMenu();
                     Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
                     Console.ReadKey();
                     return true;
-                case "5":
+                case 5:
+                    cookbook.ShoppingList.ViewShoppingList();
+                    Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
+                    Console.ReadKey();
+                    return true;
+                case 6:
                     return false;
                 default:
                     return true;
@@ -49,21 +54,20 @@ namespace Cookbook
         {
             Console.WriteLine("\n1) Zobrazit všechny recepty");
             Console.WriteLine("2) Zobrazit recepty dle kategorie");
-            Console.WriteLine("3) Zobrazit recepty dle ingredience\n");
-            Console.Write("Vyberte jednu z možností: ");
-
-            switch (Console.ReadLine())
+            Console.WriteLine("3) Zobrazit recepty dle ingredience");
+            
+            switch (AuxiliaryMethod.LoadNumberInRange("\nVyberte jednu z možností: ", 3))
             {
-                case "1":
+                case 1:
                     ShowCertainRecipeFromList(cookbook, cookbook.Recipes);
                     break;
-                case "2":
+                case 2:
                     ShowCategories();
                     Category category = (Category)(int)AuxiliaryMethod.LoadNumberInRange("Kterou kategorii chcete zobrazit?", 4);
                     var recipes = cookbook.FindRecipesByCategory(category);
                     ShowCertainRecipeFromList(cookbook, recipes);
                     break;
-                case "3":
+                case 3:
                     string ingredient = AuxiliaryMethod.LoadStringFromConsole("Recepty s kterou ingrediencí chcete zobrazit?").ToLower();
                     var recipesByIngredient = cookbook.FindRecipesByIngredient(ingredient);
                     ShowCertainRecipeFromList(cookbook, recipesByIngredient);
@@ -93,7 +97,7 @@ namespace Cookbook
             ShowRecipeNames(recipes);
             if (recipes.Count > 0)
             {
-                int recipeNumber = AuxiliaryMethod.LoadNumberInRange("Který recept chcete zobrazit?", recipes.Count);
+                int recipeNumber = AuxiliaryMethod.LoadNumberInRange("\nKterý recept chcete zobrazit?", recipes.Count);
                 Recipe recipe = cookbook.FindRecipeByName(cookbook.Recipes[recipeNumber - 1].Name);
                 if (recipe != null)
                 {
@@ -112,6 +116,6 @@ namespace Cookbook
             recipes.ForEach(x => Console.Write($"\n{i++}) {x}"));
         }
 
-        
+              
     }
 }
