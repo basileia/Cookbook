@@ -6,7 +6,7 @@ namespace Cookbook
 {
     class ShoppingList
     {
-        public List<Ingredient> IngredientsList { get; set; }
+        public List<Ingredient> IngredientsList { get; private set; }
 
         public ShoppingList() 
         {

@@ -10,7 +10,7 @@ namespace Cookbook
     {
         public bool ShowMenu { get; set; }
         public List<Recipe> Recipes { get; set; }
-        public ShoppingList ShoppingList { get; set; }
+        public ShoppingList ShoppingList { get; private set; }
 
         public Cookbook(bool showMenu = true)
         {
@@ -167,7 +167,7 @@ namespace Cookbook
             }
         }
 
-        public List<Recipe> GenerateRandomMenu()
+        private List<Recipe> GenerateRandomMenu()
         {
             Random rnd = new Random();
             List<Recipe> randomMenu = new List<Recipe>();
