@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cookbook
+﻿namespace Cookbook
 {
     class Ingredient
     {
@@ -19,11 +13,13 @@ namespace Cookbook
             Unit = unit;
         }
 
+        public Ingredient() { }
+
         public Ingredient(Ingredient clone)
         {
-            this.Name = clone.Name;
-            this.Quantity = clone.Quantity;
-            this.Unit = clone.Unit;
+            Name = clone.Name;
+            Quantity = clone.Quantity;
+            Unit = clone.Unit;
 
         }
 

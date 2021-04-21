@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cookbook
+﻿namespace Cookbook
 {
     class Program
     {
         static void Main(string[] args)
         {
 
-            Recipe recipe = new Recipe("Jahody", "Zabalit do", new List<Category>() { Category.Breakfast, Category.Snack });
-            recipe.AddIngredient();
-            recipe.AddIngredient();
+            Cookbook cookbook = new Cookbook();
 
-            recipe.ConvertToTheNumberOfServings(4);
+            cookbook.LoadRecipesFromJson();
 
-
-            Console.ReadKey();
-
+            while (cookbook.ShowMenu)
+            {
+                cookbook.ShowMenu = Menu.MainMenu(cookbook);
+            }
+            
+            cookbook.PutRecipesToJson();
+             
         }
 
-        
     }
 }

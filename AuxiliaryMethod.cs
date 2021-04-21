@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Cookbook
 {
@@ -11,17 +8,17 @@ namespace Cookbook
         public static string LoadStringFromConsole(string question)
         {
             Console.WriteLine(question);
-            string userInput = Console.ReadLine();
+            string userInput = Console.ReadLine().Trim();
 
-            while (String.IsNullOrEmpty(userInput))
+            while (string.IsNullOrEmpty(userInput))
             {
                 Console.WriteLine("Hodnota nemůže zůstat prázdná.");
                 Console.WriteLine(question);
-                userInput = Console.ReadLine();
+                userInput = Console.ReadLine().Trim();
 
             }
             
-            return userInput;
+            return userInput.Trim();
         }
 
         public static double LoadNumberFromConsole(string question)
@@ -42,8 +39,40 @@ namespace Cookbook
             }
 
             return number;
-
-
         }
+
+        public static int LoadNumberInRange(string question, int max, int min = 1)
+        {
+            int userInput = (int)LoadNumberFromConsole(question);
+            while (userInput < min || userInput > max)
+            {
+                Console.WriteLine($"Číslo není v rozmezí {min} až {max}");
+                userInput = (int)LoadNumberFromConsole(question);
+            }
+            return userInput;           
+        }
+
+        public static string EnterYesOrNo(string question)
+        {
+            string userInput = "";
+            while (userInput != "n" && userInput != "a")
+            {
+                userInput = LoadStringFromConsole(question).ToLower();
+            }
+            return userInput;
+        }
+
+       public static string GetProjectDirectory()
+        {
+            var CurrentProjectDirectory = Directory.GetCurrentDirectory();
+            if (CurrentProjectDirectory.Contains("\\bin"))
+            {
+                int index = CurrentProjectDirectory.IndexOf("\\bin");   
+                return CurrentProjectDirectory.Substring(0, index);
+            }
+            return CurrentProjectDirectory;
+            
+        }
+
     }
 }
