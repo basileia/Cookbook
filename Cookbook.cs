@@ -30,7 +30,7 @@ namespace Cookbook
                 string userInput = "";
                 while (userInput != "n")
                 {
-                    recipe.AddIngredient();
+                    RecipeConsoleUtility.AddIngredientToRecipe(recipe);
                     userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další ingredienci? a/n");
                 }
                 recipe.NumberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
