@@ -50,6 +50,7 @@
     <Compile Include="AuxiliaryMethod.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Cookbook.cs" />
+    <Compile Include="CookbookConsoleUtility.cs" />
     <Compile Include="Ingredient.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />

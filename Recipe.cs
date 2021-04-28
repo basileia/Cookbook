@@ -19,11 +19,6 @@ namespace Cookbook
             IngredientsList = new List<Ingredient>();
         }
 
-       public void AddIngredient(string name, double quantity, string unit)
-        {
-            IngredientsList.Add(new Ingredient(name, quantity, unit));
-        }
-
         public void ViewRecipe()
         {
             Console.WriteLine($"\nNÁZEV RECEPTU:\n{Name}");

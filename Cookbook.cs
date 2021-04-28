@@ -19,27 +19,17 @@ namespace Cookbook
             ShoppingList = new ShoppingList();
         }
 
-        public void AddRecipe()
+        public void AddRecipe(string name, int numberOfervings, string preparation, List<Ingredient> ingredients, List<Category> categories)
         {
-            string endOfEntry = "";
-            while(endOfEntry != "n")
+            Recipe recipe = new Recipe(name)
             {
-                string name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:");
-                Recipe recipe = new Recipe(name);
-
-                string userInput = "";
-                while (userInput != "n")
-                {
-                    RecipeConsoleUtility.AddIngredientToRecipe(recipe);
-                    userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další ingredienci? a/n");
-                }
-                recipe.NumberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
-                string preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy. Jednotlivé řádky můžete oddělit dvěma mezerami.");
-                recipe.Preparation = preparation.Replace("  ", "\n");
-                recipe.Categories = SelectCategories();
-                Recipes.Add(recipe);
-                endOfEntry = AuxiliaryMethod.EnterYesOrNo("Chcete zadat další recept? a/n");
-            }
+                NumberOfServings = numberOfervings,
+                Preparation = preparation,
+                Categories = categories,
+                IngredientsList = ingredients
+             };
+            
+            Recipes.Add(recipe);
         }
 
         public void ViewRecipes()
@@ -49,44 +39,9 @@ namespace Cookbook
              }
         }
 
-        public List<Category> SelectCategories()
-        {
-            List<Category> categories = new List<Category>();
-            string userInput = "";
-            while (userInput != "n")
-            {
-                Menu.ShowCategories();
-                int count = (int)Enum.GetValues(typeof(Category)).Cast<Category>().Max();
-                int categoryNumber = (int)AuxiliaryMethod.LoadNumberInRange("Do které kategorie chcete recept zařadit?\nNapište číslo:", count);
-                Category category = (Category)(int)categoryNumber;
-                if (!IsInCategoryList(categories, category))
-                {
-                    categories.Add(category);
-                }
-                else
-                {
-                    Console.WriteLine("Tato kategorie již byla přidána.");
-                }
-                userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat další kategorii? a/n");
-                                    
-            }
-            return categories;
-        }
-
-        private bool IsInCategoryList(List<Category> categories, Category category)
-        {
-            return categories.Contains(category);
-        }
-
         public List<Recipe> FindRecipesByCategory(Category category)
         {
-            List<Recipe> recipes = Recipes.FindAll(x => x.Categories.Contains(category));
-            if (recipes.Any())
-            {
-                return recipes;
-            }
-            Console.WriteLine($"{category}: Recept s touto kategorií v kuchařce není.");
-            return recipes;
+            return Recipes.FindAll(x => x.Categories.Contains(category));
         }
 
         public List<Recipe> FindRecipesByIngredient(string ingredientName)
@@ -102,43 +57,17 @@ namespace Cookbook
                     }
                 }
             }
-
-            if (recipes.Any())
-            {
-                return recipes;
-            }
-            Console.WriteLine("Recept s touto ingrediencí v kuchařce není.");
             return recipes;
         }
 
         public Recipe FindRecipeByName(string recipeName)
         {
-            Recipe recipe = Recipes.Find(x => x.Name.ToLower() == recipeName.ToLower());
-            if (recipe != null)
-            {
-                return recipe;
-            }
-            Console.WriteLine("Recept s tímto názvem v kuchařce není.");
-            return recipe;
+            return Recipes.Find(x => x.Name.ToLower() == recipeName.ToLower());
         }
 
-        public void DeleteRecipe()
+        public void DeleteRecipe(Recipe recipe)
         {
-            if (Recipes.Any())
-            {
-                int recipeNumber = AuxiliaryMethod.LoadNumberInRange("\nKterý recept chcete smazat?", Recipes.Count);
-                Recipe recipe = FindRecipeByName(Recipes[recipeNumber - 1].Name);
-                if (recipe != null)
-                {
-                    Recipes.Remove(recipe);
-                    Console.WriteLine("Recept byl odebrán.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Nejsou žádné recepty, které by mohly být smazány.");
-            }
-            
+            Recipes.Remove(recipe);
         }
 
         public void PutRecipesToJson()
@@ -167,7 +96,7 @@ namespace Cookbook
             }
         }
 
-        private List<Recipe> GenerateRandomMenu()
+        public List<Recipe> GenerateRandomMenu()
         {
             Random rnd = new Random();
             List<Recipe> randomMenu = new List<Recipe>();
@@ -179,36 +108,8 @@ namespace Cookbook
                     int randomIndex = rnd.Next(recipesByCategory.Count);
                     randomMenu.Add(recipesByCategory[randomIndex]);
                 }
- 
             }
             return randomMenu;                
         }
-
-        public void ShowRandomMenu()
-        {
-            List<Recipe> randomMenu = GenerateRandomMenu();
-
-            foreach (int i in Enum.GetValues(typeof(Category)))
-            {
-                Console.WriteLine($"{ (Category)i }:");
-                if (i <= randomMenu.Count)
-                {
-                    randomMenu[i - 1].ViewRecipe();
-                }
-            }
-            
-            if (randomMenu.Any())
-            {
-                string userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat ingredience do nákupního seznamu? a/n");
-                if (userInput == "a")
-                {
-                    int numberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("\nPro kolik lidí budete vařit?");
-                    randomMenu.ForEach(x => x.ConvertedIngredients = x.ConvertToTheNumberOfServings(numberOfServings));
-                    randomMenu.ForEach(x => ShoppingList.AddIngredientsToShoppingList(x));
-                    randomMenu.ForEach(x => x.ConvertedIngredients.Clear());
-                }
-            }
-        }
-
     }
 }

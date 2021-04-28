@@ -25,16 +25,16 @@ namespace Cookbook
                     Console.ReadKey();
                     return true;
                 case 2:
-                    cookbook.AddRecipe();
+                    CookbookConsoleUtility.AddRecipeToCookbook(cookbook);
                     return true;
                 case 3:
                     ShowRecipeNames(cookbook.Recipes);
-                    cookbook.DeleteRecipe();
+                    CookbookConsoleUtility.RemoveRecipeFromCookbook(cookbook);
                     Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
                     Console.ReadKey();
                     return true;
                 case 4:
-                    cookbook.ShowRandomMenu();
+                    CookbookConsoleUtility.ShowRandomMenu(cookbook);
                     Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
                     Console.ReadKey();
                     return true;
@@ -64,12 +64,12 @@ namespace Cookbook
                 case 2:
                     ShowCategories();
                     Category category = (Category)(int)AuxiliaryMethod.LoadNumberInRange("Kterou kategorii chcete zobrazit?", 4);
-                    var recipes = cookbook.FindRecipesByCategory(category);
+                    var recipes = CookbookConsoleUtility.FindRecipesByCategoryInCookbook(cookbook, category);
                     ShowCertainRecipeFromList(cookbook, recipes);
                     break;
                 case 3:
                     string ingredient = AuxiliaryMethod.LoadStringFromConsole("Recepty s kterou ingrediencí chcete zobrazit?").ToLower();
-                    var recipesByIngredient = cookbook.FindRecipesByIngredient(ingredient);
+                    var recipesByIngredient = CookbookConsoleUtility.FindRecipesByIngredientInCookbook(cookbook, ingredient);
                     ShowCertainRecipeFromList(cookbook, recipesByIngredient);
                     break;
                 default:
