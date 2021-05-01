@@ -6,24 +6,38 @@ namespace Cookbook
 {
     class ShoppingList
     {
-        public List<Ingredient> IngredientsList { get; private set; }
+        public Dictionary<string, Ingredient> IngredientsDict { get; private set; }
 
         public ShoppingList() 
         {
-            IngredientsList = new List<Ingredient>();
+            IngredientsDict = new Dictionary<string, Ingredient>();
         }
 
-        public void AddIngredientsToShoppingList(Recipe recipe)
+        public void AddIngredientsToShoppingList(Recipe recipe)   
         {
-            IngredientsList.AddRange(recipe.ConvertedIngredients);
+            foreach (var convertedIngredient in recipe.ConvertedIngredients)
+            {
+                if (IngredientsDict.ContainsKey(convertedIngredient.Name))
+                {
+                    Ingredient ingredient = IngredientsDict[convertedIngredient.Name];
+                    if (ingredient.Unit == convertedIngredient.Unit)
+                    {
+                        convertedIngredient.Quantity += ingredient.Quantity;
+                    }
+                }
+                IngredientsDict[convertedIngredient.Name] = convertedIngredient;
+            }
         }
 
         public void ViewShoppingList()
         {
-            if (IngredientsList.Any())
+            if (IngredientsDict.Any())
             {
                 int x = 1;
-                IngredientsList.ForEach(i => Console.Write($"{x++}) {i.Name}: {i.Quantity} {i.Unit}\n")); ;
+                foreach (var i in IngredientsDict.Values)
+                {
+                    Console.Write($"{x++}) {i.Name}: {i.Quantity} {i.Unit}\n");
+                }
             }
             else
             {

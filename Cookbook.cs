@@ -96,20 +96,28 @@ namespace Cookbook
             }
         }
 
-        public List<Recipe> GenerateRandomMenu()
+        public Dictionary<Category, Recipe> GenerateRandomMenu()
         {
             Random rnd = new Random();
-            List<Recipe> randomMenu = new List<Recipe>();
+            Dictionary<Category, Recipe> randomMenu = new Dictionary<Category, Recipe>();
+
             foreach (Category category in Enum.GetValues(typeof(Category)))
             {
                 List<Recipe> recipesByCategory = FindRecipesByCategory(category);
                 if (recipesByCategory.Any())
                 {
-                    int randomIndex = rnd.Next(recipesByCategory.Count);
-                    randomMenu.Add(recipesByCategory[randomIndex]);
+                    int randomIndex;
+                    do
+                    {
+                        randomIndex = rnd.Next(recipesByCategory.Count);
+
+                    } while (randomMenu.ContainsValue(recipesByCategory[randomIndex]));
+                    
+                    randomMenu[category] = recipesByCategory[randomIndex];
                 }
             }
-            return randomMenu;                
+            return randomMenu;
         }
+       
     }
 }

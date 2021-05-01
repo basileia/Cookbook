@@ -107,27 +107,39 @@ namespace Cookbook
 
         public static void ShowRandomMenu(Cookbook cookbook)
         {
-            List<Recipe> randomMenu = cookbook.GenerateRandomMenu();
+            Dictionary<Category, Recipe> randomMenu = cookbook.GenerateRandomMenu();
 
-            foreach (int i in Enum.GetValues(typeof(Category)))
+            foreach (Category i in Enum.GetValues(typeof(Category)))
             {
-                Console.WriteLine($"{ (Category)i }:");   // pozor na počet receptů v listu, nekoresponduje
-                Console.WriteLine(randomMenu.Count);
-                if (i <= randomMenu.Count)
+                Console.WriteLine($"{ i }:");   
+                
+                if (randomMenu.ContainsKey(i))
                 {
-                    randomMenu[i - 1].ViewRecipe(); 
+                    randomMenu[i].ViewRecipe(); 
+                }
+                else
+                {
+                    Console.WriteLine("Recept s touto kategorií není k dispozici.\n");
                 }
             }
+            AddIngredientsToShoppingList(randomMenu, cookbook);
+        }
 
+        public static void AddIngredientsToShoppingList(Dictionary<Category, Recipe> randomMenu, Cookbook cookbook)
+        {
             if (randomMenu.Any())
             {
                 string userInput = AuxiliaryMethod.EnterYesOrNo("Chcete přidat ingredience do nákupního seznamu? a/n");
                 if (userInput == "a")
                 {
                     int numberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("\nPro kolik lidí budete vařit?");
-                    randomMenu.ForEach(x => x.ConvertedIngredients = x.ConvertToTheNumberOfServings(numberOfServings));
-                    randomMenu.ForEach(x => cookbook.ShoppingList.AddIngredientsToShoppingList(x));
-                    randomMenu.ForEach(x => x.ConvertedIngredients.Clear());
+
+                    foreach (var recipe in randomMenu.Values)
+                    {
+                        recipe.ConvertedIngredients = recipe.ConvertToTheNumberOfServings(numberOfServings);
+                        cookbook.ShoppingList.AddIngredientsToShoppingList(recipe);
+                        recipe.ConvertedIngredients.Clear();
+                    }
                 }
             }
         }
