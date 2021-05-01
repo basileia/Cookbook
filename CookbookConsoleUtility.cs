@@ -13,7 +13,12 @@ namespace Cookbook
             string endOfEntry = "";
             while (endOfEntry != "n")
             {
-                string name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:");
+                string name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:"); ;
+                while (cookbook.Recipes.Any(p => p.Name.ToLower() == name.ToLower()))
+                {
+                    Console.WriteLine("Recept s tímto názvem již existuje.");
+                    name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:");
+                }
                 List<Ingredient> ingredients = RecipeConsoleUtility.CreateListOfIngredients();
                 int numberOfServings = (int)AuxiliaryMethod.LoadNumberFromConsole("Jaký je počet porcí?");
                 string preparation = AuxiliaryMethod.LoadStringFromConsole("Napište postup přípravy. Jednotlivé řádky můžete oddělit dvěma mezerami.");
