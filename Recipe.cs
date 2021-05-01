@@ -19,32 +19,6 @@ namespace Cookbook
             IngredientsList = new List<Ingredient>();
         }
 
-       public void AddIngredient()
-        {
-            string name;
-            double quantity;
-            string unit;
-
-            name = AuxiliaryMethod.LoadStringFromConsole("Zadejte název ingredience: ").ToLower();
-            quantity = AuxiliaryMethod.LoadNumberFromConsole("Zadejte množství: ");
-            unit = AuxiliaryMethod.LoadStringFromConsole("Zadejte jednotku: ");
-
-            IngredientsList.Add(new Ingredient(name, quantity, unit));
-
-        }
-
-        public void RemoveIngredient()
-        {
-            string ingredientToRemove = AuxiliaryMethod.LoadStringFromConsole("Kterou ingredienci chcete odebrat? ").ToLower();
-            if (IngredientsList.Any(i => i.Name == ingredientToRemove))
-            {
-                IngredientsList.RemoveAll(x => x.Name == ingredientToRemove);
-                return;
-            }
-            Console.WriteLine("Tato ingredience v receptu není.");
-            
-        }
-
         public void ViewRecipe()
         {
             Console.WriteLine($"\nNÁZEV RECEPTU:\n{Name}");
