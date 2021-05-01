@@ -11,12 +11,19 @@ namespace Cookbook
         public bool ShowMenu { get; set; }
         public List<Recipe> Recipes { get; set; }
         public ShoppingList ShoppingList { get; private set; }
+        public string SourceFile { get; private set; }
+        private readonly string sourceDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cookbook");
 
         public Cookbook(bool showMenu = true)
         {
             ShowMenu = showMenu;
             Recipes = new List<Recipe>();
             ShoppingList = new ShoppingList();
+            SourceFile = Path.Combine(sourceDirectory, "recipes.json");
+            if (!Directory.Exists(sourceDirectory))
+            {
+               Directory.CreateDirectory(sourceDirectory);
+            }
         }
 
         public void AddRecipe(string name, int numberOfervings, string preparation, List<Ingredient> ingredients, List<Category> categories)
@@ -72,10 +79,9 @@ namespace Cookbook
 
         public void PutRecipesToJson()
         {
-            string curFile = AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json";
-            if (Recipes.Any() || File.Exists(curFile))
+            if (Recipes.Any() || File.Exists(SourceFile))
             {
-                using (StreamWriter file = File.CreateText(curFile))
+                using (StreamWriter file = File.CreateText(SourceFile))
                 {
                     JsonSerializer serializer = new JsonSerializer
                     {
@@ -88,10 +94,9 @@ namespace Cookbook
 
         public void LoadRecipesFromJson()
         {
-            string file = AuxiliaryMethod.GetProjectDirectory() + "\\recipes.json";
-            if (File.Exists(file))
+            if (File.Exists(SourceFile))
             {
-                var fileContent = File.ReadAllText(file);
+                var fileContent = File.ReadAllText(SourceFile);
                 Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
             }
         }
