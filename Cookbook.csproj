@@ -58,6 +58,7 @@
     <Compile Include="Recipe.cs" />
     <Compile Include="RecipeConsoleUtility.cs" />
     <Compile Include="ShoppingList.cs" />
+    <Compile Include="ShoppingListConsoleUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

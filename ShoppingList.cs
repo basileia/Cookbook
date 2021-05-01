@@ -31,17 +31,10 @@ namespace Cookbook
 
         public void ViewShoppingList()
         {
-            if (IngredientsDict.Any())
+            int x = 1;
+            foreach (var i in IngredientsDict.Values)
             {
-                int x = 1;
-                foreach (var i in IngredientsDict.Values)
-                {
-                    Console.Write($"{x++}) {i.Name}: {i.Quantity} {i.Unit}\n");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Nákupní seznam je prázdný.");
+                Console.Write($"{x++}) {i}\n");
             }
         }
 

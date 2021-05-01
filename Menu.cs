@@ -39,7 +39,7 @@ namespace Cookbook
                     Console.ReadKey();
                     return true;
                 case 5:
-                    cookbook.ShoppingList.ViewShoppingList();
+                    ShoppingListConsoleUtility.ViewShoppingList(cookbook);
                     Console.WriteLine("Pro navrácení do hlavního menu stiskněte jakoukoli klávesu");
                     Console.ReadKey();
                     return true;
