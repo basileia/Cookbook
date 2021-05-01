@@ -61,18 +61,6 @@ namespace Cookbook
             }
             return userInput;
         }
-
-       public static string GetProjectDirectory()
-        {
-            var CurrentProjectDirectory = Directory.GetCurrentDirectory();
-            if (CurrentProjectDirectory.Contains("\\bin"))
-            {
-                int index = CurrentProjectDirectory.IndexOf("\\bin");   
-                return CurrentProjectDirectory.Substring(0, index);
-            }
-            return CurrentProjectDirectory;
-            
-        }
-
+         
     }
 }
