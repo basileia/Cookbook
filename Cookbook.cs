@@ -11,19 +11,12 @@ namespace Cookbook
         public bool ShowMenu { get; set; }
         public List<Recipe> Recipes { get; set; }
         public ShoppingList ShoppingList { get; private set; }
-        public string SourceFile { get; private set; }
-        private readonly string sourceDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Cookbook");
-
+ 
         public Cookbook(bool showMenu = true)
         {
             ShowMenu = showMenu;
             Recipes = new List<Recipe>();
             ShoppingList = new ShoppingList();
-            SourceFile = Path.Combine(sourceDirectory, "recipes.json");
-            if (!Directory.Exists(sourceDirectory))
-            {
-               Directory.CreateDirectory(sourceDirectory);
-            }
         }
 
         public void AddRecipe(string name, int numberOfervings, string preparation, List<Ingredient> ingredients, List<Category> categories)
@@ -77,28 +70,30 @@ namespace Cookbook
             Recipes.Remove(recipe);
         }
 
-        public void PutRecipesToJson()
+        public static void PutRecipesToJson(Cookbook cookbook, string filePath)
         {
-            if (Recipes.Any() || File.Exists(SourceFile))
+            if (cookbook.Recipes.Any() || File.Exists(filePath))
             {
-                using (StreamWriter file = File.CreateText(SourceFile))
+                using (StreamWriter file = File.CreateText(filePath))
                 {
                     JsonSerializer serializer = new JsonSerializer
                     {
                         Formatting = Formatting.Indented
                     };
-                    serializer.Serialize(file, Recipes);
+                    serializer.Serialize(file, cookbook.Recipes);
                 }
             }
         }
 
-        public void LoadRecipesFromJson()
+        public static Cookbook LoadRecipesFromJson(string filePath)
         {
-            if (File.Exists(SourceFile))
+            Cookbook cookbook = new Cookbook();
+            if (File.Exists(filePath))
             {
-                var fileContent = File.ReadAllText(SourceFile);
-                Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
+                var fileContent = File.ReadAllText(filePath);
+                cookbook.Recipes = JsonConvert.DeserializeObject<List<Recipe>>(fileContent);
             }
+            return cookbook;
         }
 
         public Dictionary<Category, Recipe> GenerateRandomMenu()
