@@ -73,7 +73,7 @@ namespace Cookbook
                     ShowCertainRecipeFromList(cookbook, recipesByIngredient);
                     break;
                 default:
-                    cookbook.ViewRecipes();
+                    CookbookConsoleUtility.ViewRecipes(cookbook);
                     break;
 
             }
@@ -101,7 +101,7 @@ namespace Cookbook
                 Recipe recipe = cookbook.FindRecipeByName(cookbook.Recipes[recipeNumber - 1].Name);
                 if (recipe != null)
                 {
-                    recipe.ViewRecipe();
+                    RecipeConsoleUtility.ViewRecipe(recipe);
                 }
             }
             else

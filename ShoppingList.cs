@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Cookbook
 {
@@ -27,15 +26,5 @@ namespace Cookbook
                 IngredientsDict[convertedIngredient.Name] = convertedIngredient;
             }
         }
-
-        public void ViewShoppingList()
-        {
-            int x = 1;
-            foreach (var i in IngredientsDict.Values)
-            {
-                Console.Write($"{x++}) {i}\n");
-            }
-        }
-
     }
 }

@@ -9,7 +9,11 @@ namespace Cookbook
         {
             if (cookbook.ShoppingList.IngredientsDict.Any())
             {
-                cookbook.ShoppingList.ViewShoppingList();
+                int x = 1;
+                foreach (var i in cookbook.ShoppingList.IngredientsDict.Values)
+                {
+                    Console.Write($"{x++}) {i}\n");
+                }
             }
             else
             {

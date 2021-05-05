@@ -32,14 +32,7 @@ namespace Cookbook
             Recipes.Add(recipe);
         }
 
-        public void ViewRecipes()
-        {
-             {
-                Recipes.ForEach(x => x.ViewRecipe());
-             }
-        }
-
-        public List<Recipe> FindRecipesByCategory(Category category)
+       public List<Recipe> FindRecipesByCategory(Category category)
         {
             return Recipes.FindAll(x => x.Categories.Contains(category));
         }
@@ -70,8 +63,9 @@ namespace Cookbook
             Recipes.Remove(recipe);
         }
 
-        public static void PutRecipesToJson(Cookbook cookbook, string filePath)
+        public static void PutRecipesToJson(Cookbook cookbook, string sourceDirectory, string filePath)
         {
+            AuxiliaryMethod.CreateDirectory(sourceDirectory);
             if (cookbook.Recipes.Any() || File.Exists(filePath))
             {
                 using (StreamWriter file = File.CreateText(filePath))

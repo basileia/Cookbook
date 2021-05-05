@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Cookbook
 {
-    class AuxiliaryMethod
+    static class AuxiliaryMethod
     {
         public static string LoadStringFromConsole(string question)
         {
@@ -60,6 +60,14 @@ namespace Cookbook
                 userInput = LoadStringFromConsole(question).ToLower();
             }
             return userInput;
+        }
+
+        public static void CreateDirectory(string sourceDirectory)
+        {
+            if (!Directory.Exists(sourceDirectory))
+            {
+                Directory.CreateDirectory(sourceDirectory);
+            }
         }
          
     }

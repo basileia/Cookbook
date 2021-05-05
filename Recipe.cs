@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Cookbook
 {
@@ -17,15 +16,6 @@ namespace Cookbook
         {
             Name = name;
             IngredientsList = new List<Ingredient>();
-        }
-
-        public void ViewRecipe()
-        {
-            Console.WriteLine($"\nNÁZEV RECEPTU:\n{Name}");
-            Console.WriteLine("SEZNAM INGREDIENCÍ: ");
-            IngredientsList.ForEach(i => Console.Write($"{i.Name}: {i.Quantity} {i.Unit}\n"));
-            Console.WriteLine($"PŘÍPRAVA:\n{Preparation}\nPOČET PORCÍ: {NumberOfServings}");
-            Console.WriteLine("KATEGORIE: " + string.Join(", ", Categories) + "\n");
         }
 
         public override string ToString()

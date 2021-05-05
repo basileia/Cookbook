@@ -118,7 +118,7 @@ namespace Cookbook
                 
                 if (randomMenu.ContainsKey(i))
                 {
-                    randomMenu[i].ViewRecipe(); 
+                    RecipeConsoleUtility.ViewRecipe(randomMenu[i]);
                 }
                 else
                 {
@@ -144,6 +144,13 @@ namespace Cookbook
                         recipe.ConvertedIngredients.Clear();
                     }
                 }
+            }
+        }
+
+        public static void ViewRecipes(Cookbook cookbook)
+        {
+            {
+                cookbook.Recipes.ForEach(x => RecipeConsoleUtility.ViewRecipe(x));
             }
         }
 
