@@ -98,13 +98,22 @@ namespace Cookbook
             foreach (Category category in Enum.GetValues(typeof(Category)))
             {
                 List<Recipe> recipesByCategory = FindRecipesByCategory(category);
+                
+                foreach (Recipe recipe in randomMenu.Values)
+                {
+                    if (recipesByCategory.Contains(recipe))
+                    {
+                        recipesByCategory.Remove(recipe);
+                    }
+                }
+
                 if (recipesByCategory.Any())
                 {
                     int randomIndex;
                     do
                     {
                         randomIndex = rnd.Next(recipesByCategory.Count);
-
+                       
                     } while (randomMenu.ContainsValue(recipesByCategory[randomIndex]));
                     
                     randomMenu[category] = recipesByCategory[randomIndex];
