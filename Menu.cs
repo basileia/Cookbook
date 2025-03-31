@@ -98,7 +98,6 @@ namespace Cookbook
             if (recipes.Count > 0)
             {
                 int recipeNumber = AuxiliaryMethod.LoadNumberInRange("\nKterý recept chcete zobrazit?", recipes.Count);
-                Console.WriteLine("Zmáčkli jste číslo: " + recipeNumber);
                 Recipe recipe = cookbook.FindRecipeByName(cookbook.Recipes[recipeNumber - 1].Name);
                 if (recipe != null)
                 {
