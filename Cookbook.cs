@@ -55,7 +55,12 @@ namespace Cookbook
 
         public Recipe FindRecipeByName(string recipeName)
         {
-            return Recipes.Find(x => x.Name.ToLower() == recipeName.ToLower());
+            if (Recipes == null || recipeName == null)
+            {
+                return null;
+            }
+
+            return Recipes.Find(x => x.Name != null && x.Name.ToLower() == recipeName.ToLower());
         }
 
         public void DeleteRecipe(Recipe recipe)
