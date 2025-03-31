@@ -12,7 +12,7 @@ namespace Cookbook
             while (endOfEntry != "n")
             {
                 string name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:"); ;
-                while (cookbook.Recipes.Any(p => p.Name.ToLower() == name.ToLower()))
+                while (cookbook.Recipes != null && cookbook.Recipes.Any(p => p.Name != null && p.Name.ToLower() == name.ToLower()))
                 {
                     Console.WriteLine("Recept s tímto názvem již existuje.");
                     name = AuxiliaryMethod.LoadStringFromConsole("\nZadejte název receptu:");
