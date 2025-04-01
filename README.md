@@ -1,6 +1,6 @@
 # Cookbook Console Application
 
-A simple C# console application for managing recipes.
+A C# console application for managing recipes.
 
 ## Features
 
